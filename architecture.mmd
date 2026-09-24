@@ -1,0 +1,39 @@
+graph TD
+    subgraph Client
+        User[User / Risk Analyst]
+    end
+
+    subgraph "FastAPI Application"
+        API[API Endpoints]
+        PredictSvc[Prediction Service]
+        ExplainSvc[SHAP Explainer Service]
+        LLMSvc[LLM Explainer Service]
+        Copilot[Risk Analyst Copilot]
+    end
+
+    subgraph "ML Infrastructure"
+        MLflow[MLflow Tracking & Registry]
+        Model[Trained Model & Preprocessor]
+    end
+
+    subgraph "Data & Storage"
+        DB[(PostgreSQL - Prediction Logs)]
+        Data[Loan Dataset]
+    end
+
+    subgraph "External AI"
+        OpenAI[OpenAI GPT-4 API]
+    end
+
+    User -->|POST /predict| API
+    User -->|POST /copilot| API
+    API --> PredictSvc
+    PredictSvc --> Model
+    PredictSvc --> ExplainSvc
+    ExplainSvc --> Model
+    PredictSvc --> LLMSvc
+    LLMSvc --> OpenAI
+    PredictSvc -->|Log| DB
+    Model -->|Logged to| MLflow
+    Copilot --> LLMSvc
+    API -->|Metrics/Info| MLflow
