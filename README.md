@@ -1,4 +1,4 @@
-Yes 👍 below whole thing is one single block. Just click Copy on the code block and paste directly into your README.md.
+
 
 # 🏦 LLM-Powered Loan Default Risk Prediction & Explanation System
 An end-to-end **Machine Learning + Explainable AI + Large Language Model (LLM)** powered system for predicting loan default risk and generating human-readable explanations for model predictions.
